@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -102,9 +103,19 @@ export default function SignIn(props) {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     console.log(`Login: ${state.email.value} / ${state.password.value} / ${state.remember}`);
+    let response;
+    try {
+      response = await axios.post(`${process.env.REACT_APP_API}/users/login`, {
+        email: state.email.value,
+        password: state.password.value,
+      });
+    } catch (error) {
+      console.log('[POST][USERS] Could not log user in.');
+    }
+    console.log(response);
     return;
   };
 

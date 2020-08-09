@@ -1,0 +1,6 @@
+{
+  "env": {
+    "DB_URL": "mongodb+srv://KillianFrappartDev:3698dd2de@cluster0-qo3vu.gcp.mongodb.net/chat?retryWrites=true&w=majority",
+    "SECRET": "my_secret"
+  }
+}
