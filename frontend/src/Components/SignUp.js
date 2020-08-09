@@ -12,9 +12,15 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 
 function Copyright() {
   return (
@@ -68,6 +74,7 @@ const initialState = {
   disabled: true,
   remember: false,
   isLoading: false,
+  error: false,
 };
 
 const check = (a, b) => {
@@ -114,6 +121,10 @@ const reducer = (state = initialState, action) => {
       }
     case 'loading':
       return { ...state, isLoading: state.isLoading ? false : true };
+    case 'setError':
+      return { ...state, error: true };
+    case 'cancelError':
+      return { ...state, error: false };
     default:
       return { ...state };
   }
@@ -150,10 +161,10 @@ export default function SignUp(props) {
         );
       }
       history.push('/');
+    } else {
+      dispatch({ type: 'loading' });
+      dispatch({ type: 'setError' });
     }
-
-    dispatch({ type: 'loading' });
-    return;
   };
 
   return (
@@ -234,9 +245,6 @@ export default function SignUp(props) {
             }
             label='Remember me'
           />
-          {state.isLoading && (
-            <CircularProgress className={classes.loading} size={80} color='secondary' />
-          )}
           <Button
             type='submit'
             fullWidth
@@ -246,12 +254,22 @@ export default function SignUp(props) {
             className={classes.submit}>
             Sign In
           </Button>
+          <Snackbar
+            autoHideDuration={6000}
+            open={state.error}
+            onClose={() => {
+              dispatch({ type: 'cancelError' });
+            }}>
+            <Alert
+              onClose={() => {
+                dispatch({ type: 'cancelError' });
+              }}
+              severity='error'>
+              Invalid entry, try again.
+            </Alert>
+          </Snackbar>
           <Grid container>
-            <Grid item xs>
-              <Link href='#' variant='body2'>
-                Forgot password?
-              </Link>
-            </Grid>
+            <Grid item xs></Grid>
             <Grid item>
               <Link onClick={props.switch} href='#' variant='body2'>
                 {'Already a member? Log in!'}
@@ -262,6 +280,13 @@ export default function SignUp(props) {
       </div>
       <Box mt={8}>
         <Copyright />
+        {state.isLoading && (
+          <Grid container justify='center'>
+            <Grid item>
+              <CircularProgress className={classes.loading} size={80} color='primary' />
+            </Grid>
+          </Grid>
+        )}
       </Box>
     </Container>
   );

@@ -9,19 +9,24 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
+      <Link color='inherit' href='https://github.com/KillianFrappartDev'>
         Killian Frappart
       </Link>{' '}
       {new Date().getFullYear()}
@@ -49,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   loading: {
-    margin: '1.5rem auto',
+    margin: '3rem auto',
   },
 }));
 
@@ -65,6 +70,7 @@ const initialState = {
   disabled: true,
   remember: false,
   isLoading: false,
+  error: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -103,6 +109,10 @@ const reducer = (state = initialState, action) => {
       }
     case 'loading':
       return { ...state, isLoading: state.isLoading ? false : true };
+    case 'setError':
+      return { ...state, error: true };
+    case 'cancelError':
+      return { ...state, error: false };
     default:
       return { ...state };
   }
@@ -139,9 +149,10 @@ export default function SignIn(props) {
         );
       }
       history.push('/');
+    } else {
+      dispatch({ type: 'loading' });
+      dispatch({ type: 'setError' });
     }
-    dispatch({ type: 'loading' });
-    return;
   };
 
   return (
@@ -204,9 +215,7 @@ export default function SignIn(props) {
             }
             label='Remember me'
           />
-          {state.isLoading && (
-            <CircularProgress className={classes.loading} size={80} color='secondary' />
-          )}
+
           <Button
             type='submit'
             fullWidth
@@ -216,6 +225,20 @@ export default function SignIn(props) {
             className={classes.submit}>
             Sign In
           </Button>
+          <Snackbar
+            autoHideDuration={6000}
+            open={state.error}
+            onClose={() => {
+              dispatch({ type: 'cancelError' });
+            }}>
+            <Alert
+              onClose={() => {
+                dispatch({ type: 'cancelError' });
+              }}
+              severity='error'>
+              Wrong credentials, try again.
+            </Alert>
+          </Snackbar>
           <Grid container>
             <Grid item xs>
               <Link href='#' variant='body2'>
@@ -232,6 +255,13 @@ export default function SignIn(props) {
       </div>
       <Box mt={8}>
         <Copyright />
+        {state.isLoading && (
+          <Grid container justify='center'>
+            <Grid item>
+              <CircularProgress className={classes.loading} size={80} color='primary' />
+            </Grid>
+          </Grid>
+        )}
       </Box>
     </Container>
   );
