@@ -11,10 +11,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route path="/auth">
+          <Route path='/auth' exact>
             <AuthPage />
           </Route>
-          <Redirect to="/auth" />
+          <Route path='/' exact>
+            <h1>HERE</h1>
+          </Route>
+          <Redirect to='/auth' />
         </Switch>
       </Router>
     </ThemeProvider>

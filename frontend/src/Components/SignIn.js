@@ -8,11 +8,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -45,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  loading: {
+    margin: '1.5rem auto',
+  },
 }));
 
 const initialState = {
@@ -58,6 +64,7 @@ const initialState = {
   },
   disabled: true,
   remember: false,
+  isLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -94,6 +101,8 @@ const reducer = (state = initialState, action) => {
       } else {
         return { ...state, remember: true };
       }
+    case 'loading':
+      return { ...state, isLoading: state.isLoading ? false : true };
     default:
       return { ...state };
   }
@@ -102,10 +111,13 @@ const reducer = (state = initialState, action) => {
 export default function SignIn(props) {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const history = useHistory();
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log(`Login: ${state.email.value} / ${state.password.value} / ${state.remember}`);
+
+    dispatch({ type: 'loading' });
+
     let response;
     try {
       response = await axios.post(`${process.env.REACT_APP_API}/users/login`, {
@@ -116,6 +128,19 @@ export default function SignIn(props) {
       console.log('[POST][USERS] Could not log user in.');
     }
     console.log(response);
+    if (response.data.access) {
+      if (state.remember) {
+        localStorage.setItem(
+          'userData',
+          JSON.stringify({
+            userId: response.data.userId,
+            token: response.data.token,
+          })
+        );
+      }
+      history.push('/');
+    }
+    dispatch({ type: 'loading' });
     return;
   };
 
@@ -179,6 +204,9 @@ export default function SignIn(props) {
             }
             label='Remember me'
           />
+          {state.isLoading && (
+            <CircularProgress className={classes.loading} size={80} color='secondary' />
+          )}
           <Button
             type='submit'
             fullWidth

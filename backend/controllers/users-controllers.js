@@ -4,7 +4,40 @@ const { validationResult } = require('express-validator');
 
 const User = require('../models/users-model');
 
-const login = async (req, res, next) => {};
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let user;
+  try {
+    user = await User.findOne({ email: email });
+  } catch (error) {
+    return next(new Error('[POST][USERS] Login failed.'));
+  }
+
+  if (!user) {
+    return next(new Error('[POST][USERS] Login failed (no corresponding email found).'));
+  }
+
+  let decodedPassword = false;
+  try {
+    decodedPassword = await bcrypt.compare(password, user.password);
+  } catch (error) {
+    return next(new Error('[POST][USERS] Login failed (password is wrong).'));
+  }
+
+  let token;
+  try {
+    token = await jwt.sign({ userId: user.id }, process.env.SECRET);
+  } catch (error) {
+    return next(new Error('[POST][USERS] Login failed (could not create token).'));
+  }
+
+  if (decodedPassword) {
+    res.json({ message: 'User logged in!', userId: user.id, token, access: true });
+  } else {
+    res.json({ message: 'Wrong credentials, try again.', access: false });
+  }
+};
 
 const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -52,7 +85,7 @@ const signup = async (req, res, next) => {
   }
 
   console.log('[POST][USERS] User signed up!');
-  res.json({ message: 'New user signed up!', token, newUser });
+  res.json({ message: 'New user signed up!', token, userId: newUser.id, access: true });
 };
 
 exports.login = login;
