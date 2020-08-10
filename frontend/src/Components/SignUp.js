@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,7 +16,8 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+
+import AuthContext from '../Context/auth-context';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -133,7 +134,7 @@ const reducer = (state = initialState, action) => {
 export default function SignUp(props) {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const history = useHistory();
+  const authContext = useContext(AuthContext);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -157,10 +158,11 @@ export default function SignUp(props) {
           JSON.stringify({
             userId: response.data.userId,
             token: response.data.token,
+            username: response.data.username,
           })
         );
       }
-      history.push('/');
+      authContext.login(state.username.value, response.data.userId, response.data.token);
     } else {
       dispatch({ type: 'loading' });
       dispatch({ type: 'setError' });

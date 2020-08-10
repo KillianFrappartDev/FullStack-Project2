@@ -33,7 +33,13 @@ const login = async (req, res, next) => {
   }
 
   if (decodedPassword) {
-    res.json({ message: 'User logged in!', userId: user.id, token, access: true });
+    res.json({
+      message: 'User logged in!',
+      userId: user.id,
+      token,
+      username: user.username,
+      access: true,
+    });
   } else {
     res.json({ message: 'Wrong credentials, try again.', access: false });
   }
