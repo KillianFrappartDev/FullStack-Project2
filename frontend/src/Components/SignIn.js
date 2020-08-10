@@ -18,6 +18,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+import EmailDialog from './EmailDialog';
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
@@ -71,6 +73,8 @@ const initialState = {
   remember: false,
   isLoading: false,
   error: false,
+  success: false,
+  dialog: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -113,6 +117,14 @@ const reducer = (state = initialState, action) => {
       return { ...state, error: true };
     case 'cancelError':
       return { ...state, error: false };
+    case 'setSuccess':
+      return { ...state, success: true, dialog: false };
+    case 'cancelSuccess':
+      return { ...state, success: false };
+    case 'openDialog':
+      return { ...state, dialog: true };
+    case 'closeDialog':
+      return { ...state, dialog: false };
     default:
       return { ...state };
   }
@@ -156,113 +168,144 @@ export default function SignIn(props) {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Log in
-        </Typography>
-        <form onSubmit={submitHandler} className={classes.form} noValidate>
-          <TextField
-            className='inputs-bg'
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
-            autoFocus
-            color='primary'
-            onChange={(e) => {
-              dispatch({ type: e.target.id, value: e.target.value });
-            }}
-            value={state.email.value}
-            error={!state.email.isValid}
-            helperText={!state.email.isValid ? 'Email is not valid.' : ''}
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            color='primary'
-            onChange={(e) => {
-              dispatch({ type: e.target.id, value: e.target.value });
-            }}
-            value={state.password.value}
-            error={!state.password.isValid}
-            helperText={!state.password.isValid ? 'Email is not valid.' : ''}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                value={state.remember}
-                onChange={(e) => {
-                  dispatch({ type: 'remember' });
-                }}
-                color='primary'
-              />
-            }
-            label='Remember me'
-          />
-
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='secondary'
-            disabled={state.disabled}
-            className={classes.submit}>
-            Sign In
-          </Button>
-          <Snackbar
-            autoHideDuration={6000}
-            open={state.error}
-            onClose={() => {
-              dispatch({ type: 'cancelError' });
-            }}>
-            <Alert
-              onClose={() => {
-                dispatch({ type: 'cancelError' });
+    <React.Fragment>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Log in
+          </Typography>
+          <form onSubmit={submitHandler} className={classes.form} noValidate>
+            <TextField
+              className='inputs-bg'
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              id='email'
+              label='Email Address'
+              name='email'
+              autoComplete='email'
+              autoFocus
+              color='primary'
+              onChange={(e) => {
+                dispatch({ type: e.target.id, value: e.target.value });
               }}
-              severity='error'>
-              Wrong credentials, try again.
-            </Alert>
-          </Snackbar>
-          <Grid container>
-            <Grid item xs>
-              <Link href='#' variant='body2'>
-                Forgot password?
-              </Link>
+              value={state.email.value}
+              error={!state.email.isValid}
+              helperText={!state.email.isValid ? 'Email is not valid.' : ''}
+            />
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
+              color='primary'
+              onChange={(e) => {
+                dispatch({ type: e.target.id, value: e.target.value });
+              }}
+              value={state.password.value}
+              error={!state.password.isValid}
+              helperText={!state.password.isValid ? 'Email is not valid.' : ''}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value={state.remember}
+                  onChange={(e) => {
+                    dispatch({ type: 'remember' });
+                  }}
+                  color='primary'
+                />
+              }
+              label='Remember me'
+            />
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='secondary'
+              disabled={state.disabled}
+              className={classes.submit}>
+              Sign In
+            </Button>
+
+            <Grid container>
+              <Grid item xs>
+                <Link
+                  onClick={() => {
+                    dispatch({ type: 'openDialog' });
+                  }}
+                  href='#'
+                  variant='body2'>
+                  {' '}
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link onClick={props.switch} href='#' variant='body2'>
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link onClick={props.switch} href='#' variant='body2'>
-                {"Don't have an account? Sign Up"}
-              </Link>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+          {state.isLoading && (
+            <Grid container justify='center'>
+              <Grid item>
+                <CircularProgress className={classes.loading} size={80} color='primary' />
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-        {state.isLoading && (
-          <Grid container justify='center'>
-            <Grid item>
-              <CircularProgress className={classes.loading} size={80} color='primary' />
-            </Grid>
-          </Grid>
-        )}
-      </Box>
-    </Container>
+          )}
+        </Box>
+      </Container>
+      <Snackbar
+        autoHideDuration={5000}
+        open={state.error}
+        onClose={() => {
+          dispatch({ type: 'cancelError' });
+        }}>
+        <Alert
+          onClose={() => {
+            dispatch({ type: 'cancelError' });
+          }}
+          severity='error'>
+          Wrong credentials, try again.
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        autoHideDuration={5000}
+        open={state.success}
+        onClose={() => {
+          dispatch({ type: 'cancelSuccess' });
+        }}>
+        <Alert
+          onClose={() => {
+            dispatch({ type: 'cancelSuccess' });
+          }}
+          severity='success'>
+          Password sent to your Email address.
+        </Alert>
+      </Snackbar>
+      <EmailDialog
+        open={state.dialog}
+        closeDialog={() => {
+          dispatch({ type: 'closeDialog' });
+        }}
+        submitEmail={() => {
+          dispatch({ type: 'setSuccess' });
+        }}
+      />
+    </React.Fragment>
   );
 }
