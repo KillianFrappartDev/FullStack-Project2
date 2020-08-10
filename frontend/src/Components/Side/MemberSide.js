@@ -1,21 +1,16 @@
 import React from 'react';
-import { Grid, CssBaseline, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 
 import Footer from './Footer';
 import Members from './Members';
-import SideHeader from './SideHeader';
+import MemberHeader from './MemberHeader';
 import Description from './Description';
 
-const useStyles = makeStyles((theme) => ({}));
-
-function MemberSide() {
-  const classes = useStyles();
-
+function MemberSide(props) {
   return (
     <React.Fragment>
       <Grid item xs={12}>
-        <SideHeader />
+        <MemberHeader switch={props.switch} />
         <Description />
         <Members />
       </Grid>

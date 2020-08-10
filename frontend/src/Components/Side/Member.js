@@ -27,6 +27,7 @@ function Member() {
           <Grid item xs={3}>
             <img
               className={classes.media}
+              alt=''
               src='https://img2.freepng.fr/20180606/xqu/kisspng-businessperson-management-computer-icons-patterson-avatar-man-5b187316bec997.0063361615283289827815.jpg'
             />
           </Grid>

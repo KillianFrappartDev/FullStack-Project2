@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
@@ -11,15 +11,23 @@ const useStyles = makeStyles((theme) => ({
     padding: '1rem 0',
     fontWeight: 'bold',
   },
+  icon: {
+    marginLeft: '10px',
+  },
+  button: {
+    padding: 8,
+  },
 }));
 
-function SideHeader() {
+function MemberHeader(props) {
   const classes = useStyles();
 
   return (
     <Grid className={classes.header} item container xs={12} direction='row' alignItems='center'>
       <Grid item xs={2} justify='center' container>
-        <ArrowBackIosIcon />
+        <IconButton className={classes.button} onClick={props.switch}>
+          <ArrowBackIosIcon className={classes.icon} />
+        </IconButton>
       </Grid>
       <Grid item xs={10}>
         <Typography className={classes.groupName} variant='h5'>
@@ -30,4 +38,4 @@ function SideHeader() {
   );
 }
 
-export default SideHeader;
+export default MemberHeader;

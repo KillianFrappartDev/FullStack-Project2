@@ -144,7 +144,7 @@ export default function SignIn(props) {
       const { username, userId, token } = JSON.parse(storedData);
       authContext.login(username, userId, token);
     }
-  }, []);
+  }, [authContext]);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -160,7 +160,6 @@ export default function SignIn(props) {
     } catch (error) {
       console.log('[POST][USERS] Could not log user in.');
     }
-    console.log(response);
     if (response.data.access) {
       if (state.remember) {
         localStorage.setItem(
