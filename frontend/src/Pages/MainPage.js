@@ -1,10 +1,9 @@
 import React from 'react';
-import { Grid, CssBaseline, Typography, Paper } from '@material-ui/core';
+import { Grid, CssBaseline, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import MainHeader from '../Components/Main/MainHeader';
-import SideHeader from '../Components/Side/SideHeader';
-import Description from '../Components/Side/Description';
+import MemberSide from '../Components/Side/MemberSide';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   side: {
     backgroundColor: '#120F13',
+    minHeight: '100vh',
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
@@ -27,9 +27,15 @@ const MainPage = () => {
     <CssBaseline>
       <div className={classes.root}>
         <Grid container alignContent='flex-start' alignItems='flex-start'>
-          <Grid item sm={3} wrap='nowrap' className={classes.side} container direction='column'>
-            <SideHeader />
-            <Description />
+          <Grid
+            item
+            sm={3}
+            wrap='nowrap'
+            className={classes.side}
+            container
+            direction='column'
+            justify='space-between'>
+            <MemberSide />
           </Grid>
           <Grid item xs={12} sm={9} container wrap='nowrap' direction='column'>
             <MainHeader />
