@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const useStyle = makeStyles((theme) => ({
   input: {
@@ -31,7 +32,7 @@ export default function NewGroup(props) {
     setDescription(e.target.value);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     if (name.length === 0) {
@@ -40,11 +41,19 @@ export default function NewGroup(props) {
     }
 
     const newGroup = {
-      id: 'g4',
       name: name.toUpperCase(),
       description: description,
       tag: name.charAt(0) + name.charAt(1),
     };
+
+    let response;
+    try {
+      response = await axios.post(`${process.env.REACT_APP_API}/groups`, newGroup);
+    } catch (error) {
+      console.log('[POST][GROUPS] Could not add a group.');
+    }
+
+    newGroup.id = response.data.groupId;
 
     props.addGroup(newGroup);
     props.close();

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 import GroupSide from '../Components/Side/GroupSide';
 import MainSide from '../Components/Main/MainSide';
@@ -25,43 +26,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DUMMY_GROUPS = [
-  {
-    id: 'g1',
-    name: 'WELCOME CHANNEL',
-    tag: 'WE',
-    description: 'Welcome description here!',
-  },
-  {
-    id: 'g2',
-    name: 'FRONTEND',
-    tag: 'FR',
-    description: 'Frontend description here!',
-  },
-  {
-    id: 'g3',
-    name: 'BACKEND',
-    tag: 'BA',
-    description: 'Backend description here!',
-  },
-];
-
 const MainPage = () => {
   const [memberMode, setMemberMode] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [groupList, setGroupList] = useState(DUMMY_GROUPS);
-  const [currentGroup, setCurrentGroup] = useState({
-    id: 'g1',
-    name: 'WELCOME CHANNEL',
-    tag: 'WE',
-    description: 'Welcome description here!',
-  });
+  const [groupList, setGroupList] = useState([]);
+  const [currentGroup, setCurrentGroup] = useState({});
   const classes = useStyles();
+
+  useEffect(() => {
+    const getGroups = async () => {
+      let response;
+      try {
+        response = await axios.get(`${process.env.REACT_APP_API}/groups`);
+      } catch (error) {
+        console.log('[GET][GROUPS] Could not fetch groups.');
+      }
+      setGroupList(response.data.groups);
+      setCurrentGroup(response.data.groups[0]);
+    };
+    getGroups();
+  }, []);
 
   const switchHandler = (id) => {
     memberMode ? setMemberMode(false) : setMemberMode(true);
     const selectedGroup = groupList.filter((item) => item.id === id);
-    console.log(selectedGroup);
     if (selectedGroup.length > 0) {
       setCurrentGroup(selectedGroup[0]);
     }
