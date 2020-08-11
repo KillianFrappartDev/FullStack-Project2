@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Grid, Paper, IconButton, InputBase } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
+
+import AuthContext from '../../Context/auth-context';
 
 const useStyles = makeStyles((theme) => ({
   iconButton: {
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const TextInput = (props) => {
   const classes = useStyles();
   const [message, setMessage] = useState('');
+  const authContext = useContext(AuthContext);
 
   const changeHandler = (e) => {
     setMessage(e.target.value);
@@ -35,8 +38,8 @@ const TextInput = (props) => {
 
     const newMessage = {
       user: {
-        name: 'John Smith',
-        image: 'https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png',
+        name: authContext.username,
+        image: authContext.image,
       },
       date: '05/08 - 7:50pm',
       message: message,

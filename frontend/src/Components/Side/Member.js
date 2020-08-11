@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   member: {
-    padding: '0 1.5rem',
+    padding: '10px 1.5rem 0',
   },
   media: {
     width: 50,

@@ -38,6 +38,7 @@ const login = async (req, res, next) => {
       userId: user.id,
       token,
       username: user.username,
+      image: user.image,
       access: true,
     });
   } else {
@@ -46,7 +47,7 @@ const login = async (req, res, next) => {
 };
 
 const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, image } = req.body;
 
   const invalid = validationResult(req);
   if (!invalid.isEmpty()) {
@@ -75,6 +76,7 @@ const signup = async (req, res, next) => {
     username,
     email,
     password: hashedPassword,
+    image,
   });
 
   let token;
@@ -91,7 +93,14 @@ const signup = async (req, res, next) => {
   }
 
   console.log('[POST][USERS] User signed up!');
-  res.json({ message: 'New user signed up!', token, userId: newUser.id, access: true });
+  res.json({
+    message: 'New user signed up!',
+    token,
+    userId: newUser.id,
+    username: newUser.username,
+    image: newUser.image,
+    access: true,
+  });
 };
 
 exports.login = login;

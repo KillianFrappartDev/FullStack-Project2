@@ -141,8 +141,8 @@ export default function SignIn(props) {
     if (!storedData) {
       return;
     } else {
-      const { username, userId, token } = JSON.parse(storedData);
-      authContext.login(username, userId, token);
+      const { username, userId, token, image } = JSON.parse(storedData);
+      authContext.login(username, userId, token, image);
     }
   }, [authContext]);
 
@@ -168,10 +168,16 @@ export default function SignIn(props) {
             userId: response.data.userId,
             token: response.data.token,
             username: response.data.username,
+            image: response.data.image,
           })
         );
       }
-      authContext.login(response.data.username, response.data.userId, response.data.token);
+      authContext.login(
+        response.data.username,
+        response.data.userId,
+        response.data.token,
+        response.data.image
+      );
     } else {
       dispatch({ type: 'loading' });
       dispatch({ type: 'setError' });

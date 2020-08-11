@@ -14,7 +14,7 @@ function GroupSide(props) {
         <GroupHeader openModal={props.openModal} />
         <Search />
         <Groups groups={props.groups} switch={props.switch} />
-        <NewGroup close={props.closeModal} open={props.open} />
+        <NewGroup addGroup={props.addGroup} close={props.closeModal} open={props.open} />
       </Grid>
       <Footer />
     </React.Fragment>

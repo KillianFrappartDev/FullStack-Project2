@@ -75,6 +75,14 @@ const MainPage = () => {
     setIsOpen(false);
   };
 
+  const addGroupHandler = (item) => {
+    setGroupList((prev) => {
+      const newList = [...prev];
+      newList.push(item);
+      return newList;
+    });
+  };
+
   return (
     <CssBaseline>
       <div className={classes.root}>
@@ -95,6 +103,7 @@ const MainPage = () => {
               <GroupSide
                 openModal={openHandler}
                 closeModal={closeHandler}
+                addGroup={addGroupHandler}
                 open={isOpen}
                 groups={groupList}
                 switch={switchHandler}

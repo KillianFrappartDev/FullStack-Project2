@@ -64,6 +64,10 @@ const initialState = {
     value: '',
     isValid: true,
   },
+  image: {
+    value: '',
+    isValid: true,
+  },
   email: {
     value: '',
     isValid: true,
@@ -120,6 +124,8 @@ const reducer = (state = initialState, action) => {
       } else {
         return { ...state, remember: true };
       }
+    case 'image':
+      return { ...state, image: { value: action.value } };
     case 'loading':
       return { ...state, isLoading: state.isLoading ? false : true };
     case 'setError':
@@ -145,6 +151,10 @@ export default function SignUp(props) {
     try {
       response = await axios.post(`${process.env.REACT_APP_API}/users/signup`, {
         username: state.username.value,
+        image:
+          state.image.value.trim().length === 0
+            ? 'https://avatarfiles.alphacoders.com/718/71823.jpg'
+            : state.image.value,
         email: state.email.value,
         password: state.password.value,
       });
@@ -159,10 +169,16 @@ export default function SignUp(props) {
             userId: response.data.userId,
             token: response.data.token,
             username: response.data.username,
+            image: response.data.image,
           })
         );
       }
-      authContext.login(state.username.value, response.data.userId, response.data.token);
+      authContext.login(
+        state.username.value,
+        response.data.userId,
+        response.data.token,
+        response.data.image
+      );
     } else {
       dispatch({ type: 'loading' });
       dispatch({ type: 'setError' });
@@ -197,6 +213,19 @@ export default function SignUp(props) {
             value={state.username.value}
             error={!state.username.isValid}
             helperText={!state.username.isValid ? 'Username can not be left empty.' : ''}
+          />
+          <TextField
+            variant='outlined'
+            margin='normal'
+            fullWidth
+            id='image'
+            label='Image URL'
+            name='image'
+            color='primary'
+            onChange={(e) => {
+              dispatch({ type: e.target.id, value: e.target.value });
+            }}
+            value={state.image.value}
           />
           <TextField
             variant='outlined'

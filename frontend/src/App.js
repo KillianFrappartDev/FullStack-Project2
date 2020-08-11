@@ -13,12 +13,14 @@ function App() {
   const [username, setUsername] = useState(null);
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
+  const [image, setImage] = useState(null);
 
-  const loginHandler = (uName, uId, uToken = null) => {
+  const loginHandler = (uName, uId, uToken = null, img) => {
     setUsername(uName);
     setUserId(uId);
     setIsLogged(true);
     setToken(uToken);
+    setImage(img);
   };
 
   const logoutHandler = () => {
@@ -26,6 +28,7 @@ function App() {
     setUsername(null);
     setUserId(null);
     setToken(null);
+    setImage(null);
   };
 
   let routes;
@@ -57,6 +60,7 @@ function App() {
           username,
           userId,
           token,
+          image,
           login: loginHandler,
           logout: logoutHandler,
         }}>

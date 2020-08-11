@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import AuthContext from '../../Context/auth-context';
 import Member from './Member';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,13 +13,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer() {
   const classes = useStyles();
+  const authContext = useContext(AuthContext);
 
   return (
     <Grid className={classes.footer} item xs={12}>
-      <Member
-        name='John Smith'
-        image='https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png'
-      />
+      <Member name={authContext.username} image={authContext.image} />
     </Grid>
   );
 }
