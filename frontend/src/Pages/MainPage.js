@@ -48,6 +48,7 @@ const DUMMY_GROUPS = [
 
 const MainPage = () => {
   const [memberMode, setMemberMode] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [groupList, setGroupList] = useState(DUMMY_GROUPS);
   const [currentGroup, setCurrentGroup] = useState({
     id: 'g1',
@@ -64,6 +65,14 @@ const MainPage = () => {
     if (selectedGroup.length > 0) {
       setCurrentGroup(selectedGroup[0]);
     }
+  };
+
+  const openHandler = () => {
+    setIsOpen(true);
+  };
+
+  const closeHandler = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -83,7 +92,13 @@ const MainPage = () => {
             {memberMode ? (
               <MemberSide current={currentGroup} switch={switchHandler} />
             ) : (
-              <GroupSide groups={groupList} switch={switchHandler} />
+              <GroupSide
+                openModal={openHandler}
+                closeModal={closeHandler}
+                open={isOpen}
+                groups={groupList}
+                switch={switchHandler}
+              />
             )}
           </Grid>
           <Grid

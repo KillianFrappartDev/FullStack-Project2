@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GroupHeader() {
+function GroupHeader(props) {
   const classes = useStyles();
 
   return (
@@ -29,7 +29,7 @@ function GroupHeader() {
         </Typography>
       </Grid>
       <Grid item xs={2} container justify='center' alignItems='center'>
-        <IconButton aria-label='delete' className={classes.margin}>
+        <IconButton onClick={props.openModal} aria-label='delete' className={classes.margin}>
           <AddIcon fontSize='large' />
         </IconButton>
       </Grid>
