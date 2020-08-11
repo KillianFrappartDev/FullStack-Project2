@@ -6,3 +6,23 @@ Secondary: #120F13
 body {
   margin: 0;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #969696;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(92, 92, 92);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(58, 58, 58);
+}

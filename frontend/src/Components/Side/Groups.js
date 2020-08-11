@@ -38,14 +38,14 @@ const Group = (props) => {
   return (
     <Grid className={classes.group} item xs={12} container direction='row' alignItems='center'>
       <Grid item xs={1} />
-      <Button onClick={props.switch} className={classes.button}>
+      <Button onClick={props.switch.bind(null, props.id)} className={classes.button}>
         <Paper className={classes.tag}>
           <Typography className={classes.tagName} variant='h5'>
-            XY
+            {props.tag}
           </Typography>
         </Paper>
         <Typography className={classes.name} variant='h5'>
-          Group Name
+          {props.name}
         </Typography>
       </Button>
     </Grid>
@@ -58,9 +58,9 @@ const Groups = (props) => {
   return (
     <Grid item xs={12} container direction='row'>
       <Grid className={classes.groups} item xs={12} container direction='column'>
-        <Group switch={props.switch} />
-        <Group />
-        <Group />
+        {props.groups.map((item) => (
+          <Group key={item.id} switch={props.switch} name={item.name} tag={item.tag} id={item.id} />
+        ))}
       </Grid>
     </Grid>
   );

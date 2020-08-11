@@ -3,7 +3,7 @@ import { Grid, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import GroupSide from '../Components/Side/GroupSide';
-import MainHeader from '../Components/Main/MainHeader';
+import MainSide from '../Components/Main/MainSide';
 import MemberSide from '../Components/Side/MemberSide';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,14 +19,51 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  main: {
+    minHeight: '100vh',
+    maxHeight: '100vh',
+  },
 }));
 
+const DUMMY_GROUPS = [
+  {
+    id: 'g1',
+    name: 'WELCOME CHANNEL',
+    tag: 'WE',
+    description: 'Welcome description here!',
+  },
+  {
+    id: 'g2',
+    name: 'FRONTEND',
+    tag: 'FR',
+    description: 'Frontend description here!',
+  },
+  {
+    id: 'g3',
+    name: 'BACKEND',
+    tag: 'BA',
+    description: 'Backend description here!',
+  },
+];
+
 const MainPage = () => {
-  const [memberMode, setMemberMode] = useState(false);
+  const [memberMode, setMemberMode] = useState(true);
+  const [groupList, setGroupList] = useState(DUMMY_GROUPS);
+  const [currentGroup, setCurrentGroup] = useState({
+    id: 'g1',
+    name: 'WELCOME CHANNEL',
+    tag: 'WE',
+    description: 'Welcome description here!',
+  });
   const classes = useStyles();
 
-  const switchHandler = () => {
+  const switchHandler = (id) => {
     memberMode ? setMemberMode(false) : setMemberMode(true);
+    const selectedGroup = groupList.filter((item) => item.id === id);
+    console.log(selectedGroup);
+    if (selectedGroup.length > 0) {
+      setCurrentGroup(selectedGroup[0]);
+    }
   };
 
   return (
@@ -44,13 +81,23 @@ const MainPage = () => {
             direction='column'
             justify='space-between'>
             {memberMode ? (
-              <MemberSide switch={switchHandler} />
+              <MemberSide current={currentGroup} switch={switchHandler} />
             ) : (
-              <GroupSide switch={switchHandler} />
+              <GroupSide groups={groupList} switch={switchHandler} />
             )}
           </Grid>
-          <Grid item xs={12} sm={7} md={8} lg={9} container wrap='nowrap' direction='column'>
-            <MainHeader />
+          <Grid
+            item
+            xs={12}
+            sm={7}
+            md={8}
+            lg={9}
+            className={classes.main}
+            container
+            wrap='nowrap'
+            direction='column'
+            justify='space-between'>
+            <MainSide current={currentGroup} />
           </Grid>
         </Grid>
       </div>

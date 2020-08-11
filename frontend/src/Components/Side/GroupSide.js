@@ -12,7 +12,7 @@ function GroupSide(props) {
       <Grid item xs={12}>
         <GroupHeader />
         <Search />
-        <Groups switch={props.switch} />
+        <Groups groups={props.groups} switch={props.switch} />
       </Grid>
       <Footer />
     </React.Fragment>

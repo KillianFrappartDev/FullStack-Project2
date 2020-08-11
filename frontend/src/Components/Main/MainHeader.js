@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   header: {
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    marginBottom: '2rem',
   },
   groupName: {
     padding: '1rem 0',
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function MainHeader() {
+function MainHeader(props) {
   const classes = useStyles();
 
   return (
@@ -20,7 +21,7 @@ function MainHeader() {
       <Grid item xs={1}></Grid>
       <Grid item xs={11}>
         <Typography className={classes.groupName} variant='h5'>
-          FRONT-END DEVELOPERS
+          {props.current.name}
         </Typography>
       </Grid>
     </Grid>

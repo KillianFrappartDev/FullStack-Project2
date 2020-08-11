@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
   iconButton: {
-    padding: 10,
+    padding: 15,
     marginRight: 20,
   },
   paper: {
@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#3C393F',
     display: 'flex',
     flexWrap: 'nowrap',
+    borderRadius: 8,
   },
   input: {
     margin: '0.8rem 0',

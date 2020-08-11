@@ -15,7 +15,10 @@ function Footer() {
 
   return (
     <Grid className={classes.footer} item xs={12}>
-      <Member />
+      <Member
+        name='John Smith'
+        image='https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png'
+      />
     </Grid>
   );
 }

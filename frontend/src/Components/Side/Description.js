@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Description() {
+function Description(props) {
   const classes = useStyles();
 
   return (
@@ -22,13 +22,12 @@ function Description() {
       <Grid item xs={12} container direction='column'>
         <Grid item xs={12}>
           <Typography className={classes.title} variant='h5'>
-            FRONT-END DEVELOPERS
+            {props.current.name}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='subtitle2' className={classes.text}>
-            Lorem Ipsum Su Dolor Sit Amet Lorem Ipsum Su Dolor Sit Amet Lorem Ipsum Su Dolor Sit
-            Amet Ipsum Su Dolor Sit Amet Lorem Ipsum Su Dolor Sit Amet
+          <Typography variant='h6' className={classes.text}>
+            {props.current.description}
           </Typography>
         </Grid>
       </Grid>

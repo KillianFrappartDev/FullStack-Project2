@@ -11,7 +11,7 @@ function MemberSide(props) {
     <React.Fragment>
       <Grid item xs={12}>
         <MemberHeader switch={props.switch} />
-        <Description />
+        <Description current={props.current} />
         <Members />
       </Grid>
       <Footer />
