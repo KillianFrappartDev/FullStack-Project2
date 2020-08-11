@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const usersRoute = require('./routes/users-route');
 const groupsRoute = require('./routes/groups-route');
+const messagesRoute = require('./routes/messages-route');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use('/api/users', usersRoute);
 app.use('/api/groups', groupsRoute);
+app.use('/api/messages', messagesRoute);
 
 app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An unknown error occured.' });

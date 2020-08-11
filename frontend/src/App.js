@@ -14,6 +14,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
   const [image, setImage] = useState(null);
+  const [groupId, setGroupId] = useState(null);
 
   const loginHandler = (uName, uId, uToken = null, img) => {
     setUsername(uName);
@@ -29,6 +30,10 @@ function App() {
     setUserId(null);
     setToken(null);
     setImage(null);
+  };
+
+  const groupHandler = (gid) => {
+    setGroupId(gid);
   };
 
   let routes;
@@ -61,8 +66,10 @@ function App() {
           userId,
           token,
           image,
+          groupId,
           login: loginHandler,
           logout: logoutHandler,
+          setGroup: groupHandler,
         }}>
         <Router>{routes}</Router>
       </AuthContext.Provider>

@@ -6,6 +6,8 @@ const AuthContext = createContext({
   username: null,
   userId: null,
   image: null,
+  groupId: null,
+  setGroup: () => {},
   login: () => {},
   logout: () => {},
 });

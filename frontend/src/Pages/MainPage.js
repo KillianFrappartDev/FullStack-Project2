@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
+import AuthContext from '../Context/auth-context';
 import GroupSide from '../Components/Side/GroupSide';
 import MainSide from '../Components/Main/MainSide';
 import MemberSide from '../Components/Side/MemberSide';
@@ -32,6 +33,7 @@ const MainPage = () => {
   const [groupList, setGroupList] = useState([]);
   const [currentGroup, setCurrentGroup] = useState({});
   const classes = useStyles();
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     const getGroups = async () => {
@@ -43,6 +45,7 @@ const MainPage = () => {
       }
       setGroupList(response.data.groups);
       setCurrentGroup(response.data.groups[0]);
+      authContext.setGroup(response.data.groups[0].id);
     };
     getGroups();
   }, []);
@@ -52,6 +55,8 @@ const MainPage = () => {
     const selectedGroup = groupList.filter((item) => item.id === id);
     if (selectedGroup.length > 0) {
       setCurrentGroup(selectedGroup[0]);
+      authContext.setGroup(id);
+      console.log(authContext.groupId);
     }
   };
 

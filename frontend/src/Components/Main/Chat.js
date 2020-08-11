@@ -19,7 +19,13 @@ const Chat = (props) => {
   return (
     <Grid className={classes.chat} item xs={12} container wrap='nowrap' direction='column'>
       {props.messages.map((msg) => (
-        <Message key={msg.date} user={msg.user} date={msg.date} message={msg.message} />
+        <Message
+          key={msg.date}
+          username={msg.username}
+          image={msg.image}
+          date={msg.date}
+          message={msg.message}
+        />
       ))}
     </Grid>
   );

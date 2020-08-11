@@ -37,13 +37,13 @@ const Message = (props) => {
       <Grid className={classes.member} item xs={12} container direction='column'>
         <Grid item xs={12} container direction='row' alignItems='center'>
           <Grid item xs={1}>
-            <img className={classes.media} alt='' src={props.user.image} />
+            <img className={classes.media} alt='' src={props.image} />
           </Grid>
           <Grid className={classes.content} item xs={10} container direction='column'>
             <Grid item xs={12} container direction='row'>
               <Grid item xs={2}>
                 <Typography className={classes.name} variant='h6'>
-                  {props.user.name}
+                  {props.username}
                 </Typography>
               </Grid>
               <Grid item xs={9}>

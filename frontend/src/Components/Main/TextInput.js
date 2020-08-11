@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Grid, Paper, IconButton, InputBase } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 import AuthContext from '../../Context/auth-context';
 
@@ -33,18 +34,34 @@ const TextInput = (props) => {
     setMessage(e.target.value);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
+    if (message.trim().length === 0) {
+      return;
+    }
+
     const newMessage = {
-      user: {
-        name: authContext.username,
-        image: authContext.image,
-      },
-      date: '05/08 - 7:50pm',
+      username: authContext.username,
+      image: authContext.image,
+      date: '05/09',
       message: message,
     };
 
+    console.log(newMessage);
+    console.log(authContext.userId);
+
+    let response;
+    try {
+      response = await axios.post(
+        `${process.env.REACT_APP_API}/messages/${authContext.groupId}`,
+        newMessage
+      );
+    } catch (error) {
+      console.log('[POST][MESSAGES] Add message failed.');
+    }
+
+    console.log(response);
     props.send(newMessage);
     setMessage('');
   };
