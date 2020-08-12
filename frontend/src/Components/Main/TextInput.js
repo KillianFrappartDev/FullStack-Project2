@@ -68,9 +68,6 @@ const TextInput = (props) => {
       message: message,
     };
 
-    console.log(newMessage);
-    console.log(authContext.userId);
-
     let response;
     try {
       response = await axios.post(
@@ -84,6 +81,14 @@ const TextInput = (props) => {
     console.log(response);
     props.send(newMessage);
     setMessage('');
+
+    try {
+      await axios.post(`${process.env.REACT_APP_API}/groups/${authContext.groupId}`, {
+        userId: authContext.userId,
+      });
+    } catch (error) {
+      console.log('[POST][GROUPS] Add member failed.');
+    }
   };
 
   return (

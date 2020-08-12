@@ -6,10 +6,13 @@ import Message from './Message';
 
 const useStyles = makeStyles((theme) => ({
   chat: {
-    padding: '2rem 6rem',
+    padding: '2rem 4rem',
     overflowY: 'scroll',
     overflowX: 'hidden',
     maxHeight: '75vh',
+    [theme.breakpoints.down('sm')]: {
+      padding: '2rem 0',
+    },
   },
 }));
 
@@ -20,7 +23,7 @@ const Chat = (props) => {
     <Grid className={classes.chat} item xs={12} container wrap='nowrap' direction='column'>
       {props.messages.map((msg) => (
         <Message
-          key={msg.id || Math.random()}
+          key={msg.id + Math.random() || Math.random()}
           username={msg.username}
           image={msg.image}
           date={msg.date}

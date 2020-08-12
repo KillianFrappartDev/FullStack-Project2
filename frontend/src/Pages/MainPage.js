@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   side: {
     backgroundColor: '#120F13',
     minHeight: '100vh',
+  },
+  hideSide: {
+    backgroundColor: '#120F13',
+    minHeight: '100vh',
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
@@ -25,6 +29,17 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     maxHeight: '100vh',
   },
+  hideMain: {
+    minHeight: '100vh',
+    maxHeight: '100vh',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  backdrop: {
+    height: '100vh',
+    width: '100%',
+  },
 }));
 
 const MainPage = () => {
@@ -32,6 +47,8 @@ const MainPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [groupList, setGroupList] = useState([]);
   const [currentGroup, setCurrentGroup] = useState({});
+  const [initGroups, setInitGroups] = useState([]);
+  const [isHide, setIsHide] = useState(false);
   const classes = useStyles();
   const authContext = useContext(AuthContext);
 
@@ -45,6 +62,7 @@ const MainPage = () => {
       }
       setGroupList(response.data.groups);
       setCurrentGroup(response.data.groups[0]);
+      setInitGroups(response.data.groups);
       authContext.setGroup(response.data.groups[0].id);
     };
     getGroups();
@@ -56,7 +74,6 @@ const MainPage = () => {
     if (selectedGroup.length > 0) {
       setCurrentGroup(selectedGroup[0]);
       authContext.setGroup(id);
-      console.log(authContext.groupId);
     }
   };
 
@@ -74,6 +91,19 @@ const MainPage = () => {
       newList.push(item);
       return newList;
     });
+    setInitGroups((prev) => {
+      const newList = [...prev];
+      newList.push(item);
+      return newList;
+    });
+  };
+
+  const updateHandler = (arr) => {
+    setGroupList(arr);
+  };
+
+  const hideHandler = () => {
+    isHide ? setIsHide(false) : setIsHide(true);
   };
 
   return (
@@ -82,11 +112,12 @@ const MainPage = () => {
         <Grid container alignContent='flex-start' alignItems='flex-start'>
           <Grid
             item
+            xs={10}
             sm={5}
             md={4}
             lg={3}
             wrap='nowrap'
-            className={classes.side}
+            className={!isHide ? classes.hideSide : classes.side}
             container
             direction='column'
             justify='space-between'>
@@ -98,23 +129,26 @@ const MainPage = () => {
                 closeModal={closeHandler}
                 addGroup={addGroupHandler}
                 open={isOpen}
+                initGroups={initGroups}
                 groups={groupList}
                 switch={switchHandler}
+                update={updateHandler}
               />
             )}
           </Grid>
+          {isHide && <Grid className={classes.backdrop} item xs={2} onClick={hideHandler} />}
           <Grid
             item
             xs={12}
             sm={7}
             md={8}
             lg={9}
-            className={classes.main}
+            className={isHide ? classes.hideMain : classes.main}
             container
             wrap='nowrap'
             direction='column'
             justify='space-between'>
-            <MainSide current={currentGroup} />
+            <MainSide hide={hideHandler} current={currentGroup} />
           </Grid>
         </Grid>
       </div>

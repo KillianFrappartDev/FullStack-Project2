@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     fontSize: '0.8rem',
     marginTop: 8,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   content: {
     marginLeft: '1rem',
@@ -36,17 +39,17 @@ const Message = (props) => {
     <Grid className={classes.message} item xs={12} container direction='row'>
       <Grid className={classes.member} item xs={12} container direction='column'>
         <Grid item xs={12} container direction='row' alignItems='center'>
-          <Grid item xs={1}>
+          <Grid item xs={3} sm={2}>
             <img className={classes.media} alt='' src={props.image} />
           </Grid>
-          <Grid className={classes.content} item xs={10} container direction='column'>
+          <Grid className={classes.content} item xs={8} sm={9} container direction='column'>
             <Grid item xs={12} container direction='row'>
-              <Grid item xs={2}>
+              <Grid item sm={6}>
                 <Typography className={classes.name} variant='h6'>
                   {props.username}
                 </Typography>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item sm={6}>
                 <Typography className={classes.date} variant='h6'>
                   {props.date}
                 </Typography>

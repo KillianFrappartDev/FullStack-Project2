@@ -56,6 +56,7 @@ export default function NewGroup(props) {
     newGroup.id = response.data.groupId;
 
     props.addGroup(newGroup);
+    props.success();
     props.close();
   };
 

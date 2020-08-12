@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Grid } from '@material-ui/core';
 import axios from 'axios';
 import AuthContext from '../../Context/auth-context';
@@ -11,18 +11,19 @@ const MainSide = (props) => {
   const [messageList, setMessageList] = useState([]);
   const authContext = useContext(AuthContext);
 
+  const fetchMessages = async (gid) => {
+    console.log('Fetching');
+    let response;
+    try {
+      response = await axios.get(`${process.env.REACT_APP_API}/messages/${gid}`);
+    } catch (error) {
+      console.log('[GET][MESSAGES] Fetch messages failed.');
+    }
+    setMessageList(response.data.messages);
+  };
+
   useEffect(() => {
-    const fetchMessages = async () => {
-      let response;
-      try {
-        response = await axios.get(`${process.env.REACT_APP_API}/messages/${authContext.groupId}`);
-      } catch (error) {
-        console.log('[GET][MESSAGES] Fetch messages failed.');
-      }
-      console.log(response.data);
-      setMessageList(response.data.messages);
-    };
-    fetchMessages();
+    fetchMessages(authContext.groupId);
   }, [authContext.groupId]);
 
   const sendHandler = (msg) => {
@@ -35,7 +36,7 @@ const MainSide = (props) => {
 
   return (
     <React.Fragment>
-      <MainHeader current={props.current} />
+      <MainHeader hide={props.hide} current={props.current} />
       <Grid item xs={12}>
         <Chat messages={messageList} />
         <TextInput send={sendHandler} />

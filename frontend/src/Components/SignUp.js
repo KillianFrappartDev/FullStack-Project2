@@ -296,7 +296,7 @@ export default function SignUp(props) {
                 dispatch({ type: 'cancelError' });
               }}
               severity='error'>
-              Invalid entry, try again.
+              An account for the provided email already exists.
             </Alert>
           </Snackbar>
           <Grid container>

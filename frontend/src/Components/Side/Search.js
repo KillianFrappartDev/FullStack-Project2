@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -20,8 +20,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = () => {
+const Search = (props) => {
+  const [searchValue, setSearchValue] = useState('');
   const classes = useStyles();
+
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value);
+    const allGroups = props.groups;
+    const filteredGroups = allGroups.filter((grp) =>
+      grp.name.includes(e.target.value.toUpperCase())
+    );
+    props.update(filteredGroups);
+  };
 
   return (
     <Grid item xs={12} container direction='row'>
@@ -31,7 +41,12 @@ const Search = () => {
           <IconButton className={classes.iconButton} aria-label='menu'>
             <SearchIcon />
           </IconButton>
-          <InputBase className={classes.input} placeholder='Search' />
+          <InputBase
+            value={searchValue}
+            onChange={searchHandler}
+            className={classes.input}
+            placeholder='Search'
+          />
         </Paper>
       </Grid>
     </Grid>
