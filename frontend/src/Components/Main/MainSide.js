@@ -22,6 +22,15 @@ const MainSide = (props) => {
     setMessageList(response.data.messages);
   };
 
+  let int;
+  useEffect(() => {
+    int = setInterval(fetchMessages.bind(null, authContext.groupId), 5000);
+
+    return () => {
+      clearInterval(int);
+    };
+  }, [authContext]);
+
   useEffect(() => {
     fetchMessages(authContext.groupId);
   }, [authContext.groupId]);
