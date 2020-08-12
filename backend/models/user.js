@@ -8,6 +8,7 @@ const schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   image: { type: String, required: true },
+  group: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Group' }],
 });
 
 schema.plugin(uniqueValidator);

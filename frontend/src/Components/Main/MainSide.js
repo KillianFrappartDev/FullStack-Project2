@@ -1,34 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid } from '@material-ui/core';
+import axios from 'axios';
+import AuthContext from '../../Context/auth-context';
 
 import Chat from './Chat';
 import MainHeader from './MainHeader';
 import TextInput from './TextInput';
 
-const DUMMY_MESSAGES = [
-  {
-    username: 'John Smith',
-    image: 'https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png',
-    date: '05/08 - 7:50pm',
-    message: 'Hello world!',
-  },
-  {
-    username: 'Mary Miller',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSjtU6G7eH3COAumnAB34AoGQG2RIOx4O7NnQ&usqp=CAU',
-    date: '05/08 - 8:50pm',
-    message: 'How are you today?',
-  },
-  {
-    username: 'John Smith',
-    image: 'https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png',
-    date: '05/08 - 8:55pm',
-    message: 'Great :)',
-  },
-];
-
 const MainSide = (props) => {
-  const [messageList, setMessageList] = useState(DUMMY_MESSAGES);
+  const [messageList, setMessageList] = useState([]);
+  const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      let response;
+      try {
+        response = await axios.get(`${process.env.REACT_APP_API}/messages/${authContext.groupId}`);
+      } catch (error) {
+        console.log('[GET][MESSAGES] Fetch messages failed.');
+      }
+      console.log(response.data);
+      setMessageList(response.data.messages);
+    };
+    fetchMessages();
+  }, [authContext.groupId]);
 
   const sendHandler = (msg) => {
     setMessageList((prev) => {

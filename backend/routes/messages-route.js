@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.post('/:gid', controllers.addMessage);
 
+router.get('/:gid', controllers.getMessages);
+
 module.exports = router;

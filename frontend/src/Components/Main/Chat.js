@@ -20,7 +20,7 @@ const Chat = (props) => {
     <Grid className={classes.chat} item xs={12} container wrap='nowrap' direction='column'>
       {props.messages.map((msg) => (
         <Message
-          key={msg.date}
+          key={msg.id || Math.random()}
           username={msg.username}
           image={msg.image}
           date={msg.date}

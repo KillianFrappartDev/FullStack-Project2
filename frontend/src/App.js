@@ -14,7 +14,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
   const [image, setImage] = useState(null);
-  const [groupId, setGroupId] = useState(null);
+  const [groupId, setGroupId] = useState('5f32a0c7f2bae600a1bada92');
 
   const loginHandler = (uName, uId, uToken = null, img) => {
     setUsername(uName);
