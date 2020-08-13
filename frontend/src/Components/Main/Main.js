@@ -2,24 +2,39 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Grid } from '@material-ui/core';
 import axios from 'axios';
 import AuthContext from '../../Context/auth-context';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Chat from './Chat';
 import MainHeader from './MainHeader';
 import TextInput from './TextInput';
 
+const useStyles = makeStyles((theme) => ({
+  loading: {
+    margin: '0 auto 20vh',
+    width: '100%',
+  },
+}));
+
 const MainSide = (props) => {
   const [messageList, setMessageList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState(false);
+  const classes = useStyles();
   const authContext = useContext(AuthContext);
 
   const fetchMessages = async (gid) => {
-    console.log('Fetching');
     let response;
     try {
       response = await axios.get(`${process.env.REACT_APP_API}/messages/${gid}`);
     } catch (error) {
       console.log('[GET][MESSAGES] Fetch messages failed.');
     }
+    if (!response) {
+      return;
+    }
     setMessageList(response.data.messages);
+    setIsLoading(false);
   };
 
   let int;
@@ -32,6 +47,7 @@ const MainSide = (props) => {
   }, [authContext]);
 
   useEffect(() => {
+    setIsLoading(true);
     fetchMessages(authContext.groupId);
   }, [authContext.groupId]);
 
@@ -41,13 +57,20 @@ const MainSide = (props) => {
       newList.push(msg);
       return newList;
     });
+    newMessage ? setNewMessage(false) : setNewMessage(true);
   };
 
   return (
     <React.Fragment>
       <MainHeader hide={props.hide} current={props.current} />
       <Grid item xs={12}>
-        <Chat messages={messageList} />
+        {isLoading ? (
+          <Grid item xs={12} container direction='row'>
+            <CircularProgress className={classes.loading} size={120} color='primary' />
+          </Grid>
+        ) : (
+          <Chat newMessage={newMessage} messages={messageList} />
+        )}
         <TextInput send={sendHandler} />
       </Grid>
     </React.Fragment>

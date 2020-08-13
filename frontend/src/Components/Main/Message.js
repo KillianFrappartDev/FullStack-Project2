@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: 50,
+    height: 50,
     borderRadius: '20%',
   },
   name: {

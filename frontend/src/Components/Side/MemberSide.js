@@ -9,7 +9,7 @@ import Description from './Description';
 function MemberSide(props) {
   return (
     <React.Fragment>
-      <Grid item xs={12}>
+      <Grid item xs={12} container direction='column'>
         <MemberHeader switch={props.switch} />
         <Description current={props.current} />
         <Members />

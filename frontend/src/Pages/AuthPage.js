@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import SignIn from '../Components/SignIn';
-import SignUp from '../Components/SignUp';
+import SignIn from '../Components/Auth/SignIn';
+import SignUp from '../Components/Auth/SignUp';
 
 const AuthPage = () => {
   const [loginMode, setLoginMode] = useState(true);

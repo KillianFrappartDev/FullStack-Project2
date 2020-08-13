@@ -17,7 +17,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
-import AuthContext from '../Context/auth-context';
+import AuthContext from '../../Context/auth-context';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;

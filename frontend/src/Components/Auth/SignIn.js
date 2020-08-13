@@ -17,7 +17,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
 
-import AuthContext from '../Context/auth-context';
+import AuthContext from '../../Context/auth-context';
 import EmailDialog from './EmailDialog';
 
 function Alert(props) {

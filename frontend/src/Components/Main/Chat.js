@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -19,8 +19,22 @@ const useStyles = makeStyles((theme) => ({
 const Chat = (props) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    const chatElement = document.getElementById('chat');
+    if (chatElement) {
+      chatElement.scrollTop = chatElement.scrollHeight;
+    }
+  }, [props.newMessage]);
+
   return (
-    <Grid className={classes.chat} item xs={12} container wrap='nowrap' direction='column'>
+    <Grid
+      id='chat'
+      className={classes.chat}
+      item
+      xs={12}
+      container
+      wrap='nowrap'
+      direction='column'>
       {props.messages.map((msg) => (
         <Message
           key={msg.id + Math.random() || Math.random()}

@@ -5,22 +5,23 @@ import axios from 'axios';
 
 import AuthContext from '../Context/auth-context';
 import GroupSide from '../Components/Side/GroupSide';
-import MainSide from '../Components/Main/MainSide';
+import Main from '../Components/Main/Main';
 import MemberSide from '../Components/Side/MemberSide';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
     backgroundColor: theme.palette.background.default,
-    flexGrow: 1,
   },
   side: {
     backgroundColor: '#120F13',
     minHeight: '100vh',
+    maxHeight: '100vh',
   },
   hideSide: {
     backgroundColor: '#120F13',
     minHeight: '100vh',
+    maxHeight: '100vh',
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
@@ -59,6 +60,9 @@ const MainPage = () => {
         response = await axios.get(`${process.env.REACT_APP_API}/groups`);
       } catch (error) {
         console.log('[GET][GROUPS] Could not fetch groups.');
+      }
+      if (!response) {
+        return;
       }
       setGroupList(response.data.groups);
       setCurrentGroup(response.data.groups[0]);
@@ -148,7 +152,7 @@ const MainPage = () => {
             wrap='nowrap'
             direction='column'
             justify='space-between'>
-            <MainSide hide={hideHandler} current={currentGroup} />
+            <Main hide={hideHandler} current={currentGroup} />
           </Grid>
         </Grid>
       </div>

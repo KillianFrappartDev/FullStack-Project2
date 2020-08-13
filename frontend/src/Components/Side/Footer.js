@@ -25,7 +25,14 @@ function Footer() {
   };
 
   return (
-    <Grid className={classes.footer} item xs={12} container direction='row' alignItems='center'>
+    <Grid
+      id='test-bottom'
+      className={classes.footer}
+      item
+      xs={12}
+      container
+      direction='row'
+      alignItems='center'>
       <Grid item xs={9}>
         <Member name={authContext.username} image={authContext.image} />
       </Grid>

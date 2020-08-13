@@ -6,7 +6,7 @@ import Search from './Search';
 import Footer from './Footer';
 import GroupHeader from './GroupHeader';
 import Groups from './Groups';
-import NewGroup from '../NewGroup';
+import NewGroup from './NewGroup';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
