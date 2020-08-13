@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     color: '#828282',
+    marginLeft: 20,
   },
 }));
 

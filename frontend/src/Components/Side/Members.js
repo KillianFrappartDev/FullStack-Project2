@@ -11,8 +11,6 @@ let topEl;
 let bottomEl;
 let height;
 
-console.log('run');
-
 const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',

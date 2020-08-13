@@ -17,6 +17,7 @@ app.use('/api/groups', groupsRoute);
 app.use('/api/messages', messagesRoute);
 
 app.use((error, req, res, next) => {
+  console.log(error);
   res.json({ message: error.message || 'An unknown error occured.' });
 });
 
