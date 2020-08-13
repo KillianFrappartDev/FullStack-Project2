@@ -34,7 +34,7 @@ function Footer() {
       direction='row'
       alignItems='center'>
       <Grid item xs={9}>
-        <Member name={authContext.username} image={authContext.image} />
+        <Member name={authContext.username.split(' ')[0]} image={authContext.image} />
       </Grid>
       <Grid item xs={3}>
         <IconButton onClick={clickHandler} className={classes.button}>
