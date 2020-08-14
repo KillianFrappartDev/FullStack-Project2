@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '2rem 4rem',
     overflowY: 'scroll',
     overflowX: 'hidden',
-    maxHeight: '75vh',
+    maxHeight: '76vh',
     [theme.breakpoints.down('sm')]: {
       padding: '2rem 0',
     },

@@ -7,10 +7,6 @@ import axios from 'axios';
 import AuthContext from '../../Context/auth-context';
 import Member from '../Side/Member';
 
-let topEl;
-let bottomEl;
-let height;
-
 const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
@@ -23,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   members: {
     overflowY: 'scroll',
     overflowX: 'hidden',
-    maxHeight: height || '48vh',
+    maxHeight: '40vh',
   },
 }));
 
@@ -32,23 +28,6 @@ function Members() {
   const authContext = useContext(AuthContext);
   const [memberList, setMemberList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    topEl = document.getElementById('test-top');
-    if (topEl) {
-      console.log(topEl.getBoundingClientRect().top);
-    }
-
-    bottomEl = document.getElementById('test-bottom');
-    if (bottomEl) {
-      console.log(bottomEl.getBoundingClientRect().top);
-    }
-
-    if (topEl && bottomEl) {
-      height = bottomEl.getBoundingClientRect().top - topEl.getBoundingClientRect().top - 50;
-      console.log(height);
-    }
-  }, [height]);
 
   useEffect(() => {
     setIsLoading(true);

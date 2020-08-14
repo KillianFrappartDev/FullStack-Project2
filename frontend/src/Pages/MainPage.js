@@ -10,29 +10,25 @@ import MemberSide from '../Components/Side/MemberSide';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    minHeight: '100vh',
     backgroundColor: theme.palette.background.default,
   },
   side: {
     backgroundColor: '#120F13',
     minHeight: '100vh',
-    maxHeight: '100vh',
   },
   hideSide: {
     backgroundColor: '#120F13',
     minHeight: '100vh',
-    maxHeight: '100vh',
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
   },
   main: {
     minHeight: '100vh',
-    maxHeight: '100vh',
   },
   hideMain: {
     minHeight: '100vh',
-    maxHeight: '100vh',
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },

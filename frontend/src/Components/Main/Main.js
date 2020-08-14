@@ -69,9 +69,13 @@ const MainSide = (props) => {
             <CircularProgress className={classes.loading} size={120} color='primary' />
           </Grid>
         ) : (
-          <Chat newMessage={newMessage} messages={messageList} />
+          <Grid item xs={12}>
+            <Chat newMessage={newMessage} messages={messageList} />
+          </Grid>
         )}
-        <TextInput send={sendHandler} />
+        <Grid item xs={12}>
+          <TextInput send={sendHandler} />
+        </Grid>
       </Grid>
     </React.Fragment>
   );
