@@ -13,11 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     marginTop: '2rem',
-    marginBottom: '2rem',
+    marginBottom: 0,
     backgroundColor: '#3C393F',
     display: 'flex',
     flexWrap: 'nowrap',
     borderRadius: 12,
+    transform: 'translateY(-10px)',
   },
   input: {
     margin: '0.8rem 0 0.8rem 1rem',

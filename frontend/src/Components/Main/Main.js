@@ -63,7 +63,7 @@ const MainSide = (props) => {
   return (
     <React.Fragment>
       <MainHeader hide={props.hide} current={props.current} />
-      <Grid item xs={12}>
+      <Grid item xs={12} container direction='column' justify='flex-start' wrap='nowrap'>
         {isLoading ? (
           <Grid item xs={12} container direction='row'>
             <CircularProgress className={classes.loading} size={120} color='primary' />

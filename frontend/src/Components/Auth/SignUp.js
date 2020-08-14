@@ -219,7 +219,7 @@ export default function SignUp(props) {
             margin='normal'
             fullWidth
             id='image'
-            label='Image URL'
+            label='Image URL (Leave empty for default image)'
             name='image'
             color='primary'
             onChange={(e) => {

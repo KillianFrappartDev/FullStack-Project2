@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: 50,
-    height: 55,
+    height: 50,
     borderRadius: '20%',
     margin: '0.8rem 0',
   },

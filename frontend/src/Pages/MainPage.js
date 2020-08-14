@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   side: {
     backgroundColor: '#120F13',
     minHeight: '100vh',
+    height: '100%',
   },
   hideSide: {
     backgroundColor: '#120F13',
@@ -113,7 +114,7 @@ const MainPage = () => {
           <Grid
             item
             xs={10}
-            sm={5}
+            sm={4}
             md={4}
             lg={3}
             wrap='nowrap'
@@ -140,7 +141,7 @@ const MainPage = () => {
           <Grid
             item
             xs={12}
-            sm={7}
+            sm={8}
             md={8}
             lg={9}
             className={isHide ? classes.hideMain : classes.main}

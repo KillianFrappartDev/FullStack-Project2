@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     width: 50,
     height: 50,
     borderRadius: '20%',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       width: 60,
       height: 60,
     },
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   content: {
-    marginLeft: '1rem',
+    marginLeft: '1.5rem',
   },
 }));
 
@@ -47,7 +47,14 @@ const Message = (props) => {
           <Grid item xs={3} sm={2} md={1}>
             <img className={classes.media} alt='' src={props.image} />
           </Grid>
-          <Grid className={classes.content} item xs={8} sm={9} container direction='column'>
+          <Grid
+            className={classes.content}
+            alignItems='flex-start'
+            item
+            xs={8}
+            sm={9}
+            container
+            direction='column'>
             <Grid item xs={12} container direction='row'>
               <Grid item sm={6}>
                 <Typography className={classes.name} variant='h6'>

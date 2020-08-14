@@ -6,10 +6,10 @@ import Message from './Message';
 
 const useStyles = makeStyles((theme) => ({
   chat: {
-    padding: '2rem 4rem',
+    padding: '1.5rem 3.5rem',
     overflowY: 'scroll',
     overflowX: 'hidden',
-    maxHeight: '76vh',
+    maxHeight: '74vh',
     [theme.breakpoints.down('sm')]: {
       padding: '2rem 0',
     },
